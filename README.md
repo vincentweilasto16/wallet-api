@@ -6,6 +6,7 @@ The project includes **database migrations with seed data**, making it easy to s
 ---
 
 ## 📋 Table of Contents
+
 1. [Assumptions](#assumptions)
 2. [User Story (Process Flow)](#user-story)
 3. [Tech Stack](#tech-stack)
@@ -28,27 +29,33 @@ The project includes **database migrations with seed data**, making it easy to s
 
 ## 🧑‍💻 User Story (Process Flow)
 
-1. 📄 **View Wallet Balance**  
-   - The user opens their **Wallet page** in the application.  
-   - The frontend calls the API: `GET /api/v1/users/:id` to retrieve the latest balance.  
-   - The user sees their current balance on screen.  
+1. 📄 **View Wallet Balance**
 
-2. 🔄 **Refresh Balance**  
-   - If the user refreshes the page,  
-   - The same API is called again to ensure the balance shown is always up-to-date.  
+   - The user opens their **Wallet page** in the application.
+   - The frontend calls the API: `GET /api/v1/users/:id` to retrieve the latest balance.
+   - The user sees their current balance on screen.
 
-3. 💵 **Initiate Withdrawal**  
-   - The user clicks the **Withdraw** button and enters the desired amount.  
+2. 🔄 **Refresh Balance**
+
+   - If the user refreshes the page,
+   - The same API is called again to ensure the balance shown is always up-to-date.
+
+3. 💵 **Initiate Withdrawal**
+
+   - The user clicks the **Withdraw** button and enters the desired amount.
    - The frontend sends a request to:  
-     `POST /api/v1/transactions/withdraw` with the `user_id` and `amount`.  
+     `POST /api/v1/transactions/withdraw` with the `user_id` and `amount`.
 
-4. ✅ **Successful Withdrawal**  
-   - The page is redirected or refreshed, triggering `GET /api/v1/users/:id` again.  
-   - The updated balance is displayed, showing the deduction from the withdrawal.  
+4. ✅ **Successful Withdrawal**
 
-5. ⚠️ **Insufficient Balance**  
-   - If the withdrawal fails due to insufficient balance,  
+   - The page is redirected or refreshed, triggering `GET /api/v1/users/:id` again.
+   - The updated balance is displayed, showing the deduction from the withdrawal.
+
+5. ⚠️ **Insufficient Balance**
+   - If the withdrawal fails due to insufficient balance,
    - The API responds with an error, and the frontend shows a relevant error message without changing the balance display.
+
+![Wallet API Flowchart Diagram](docs/flowchart/Digital Wallet Withdrawal Flowchart.png)
 
 ---
 
@@ -84,13 +91,14 @@ Before running the application, ensure you have:
 ## 🗄 Database Architecture Diagram
 
 The following Entity-Relationship Diagram (ERD) illustrates the database structure for the Wallet API:
-![Wallet API ERD](docs/wallet_api_erd.png)
+![Wallet API ERD](docs/erd/wallet_api_erd.png)
 
 ---
 
 ## 🚀 Setup & Run
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/vincentweilasto16/wallet-api.git
    ```
@@ -100,19 +108,22 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
    go mod tidy
    go mod vendor
    ```
-   
 3. Setup environment
+
    ```bash
    cp .env.example .env
    ```
-   Adjust *.env* to match your local PostgreSQL or Docker Setup
+
+   Adjust _.env_ to match your local PostgreSQL or Docker Setup
 
 4. Create the database
+
    ```bash
    CREATE DATABASE wallet_db;
    ```
 
 5. Run the application
+
    ```bash
    go run cmd/main.go
    ```
@@ -125,11 +136,13 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
 
 1. **Get User By ID**
    Endpoint:
+
    ```bash
    GET /api/v1/users/:id
    ```
 
    Response (Success - 200 OK):
+
    ```bash
    {
     "data": {
@@ -149,6 +162,7 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
    ```
 
    Response (Failure - User Not Found - 404 Not Found):
+
    ```bash
     {
         "data": null,
@@ -167,11 +181,13 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
 
 2. **Withdraw**
    Endpoint:
+
    ```bash
    POST /api/v1/transactions/withdraw
    ```
 
    Request Body:
+
    ```bash
    {
     "user_id": "a440fd30-6894-4e93-b041-2f577c09d002",
@@ -180,6 +196,7 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
    ```
 
    Response (Success - 200 OK):
+
    ```bash
    {
         "data": {
@@ -193,6 +210,7 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
    ```
 
    Response (Failure - Insufficient Balance - 422 Unprocessable entity):
+
    ```bash
     {
         "data": null,
@@ -210,6 +228,7 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
    ```
 
    Response (Failure - User Not Found - 404 Not Found):
+
    ```bash
     {
         "data": null,
@@ -226,35 +245,40 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
     }
    ```
 
-   
-
 ---
 
 ## 🔮 Limitations & Future Improvements
 
 - **Authentication & Authorization**
+
   - Implement JWT with Bearer tokens for all API endpoints.
 
 - **Withdraw Transaction Handling**
+
   - Add rollback mechanism for failed withdrawals.
   - Implement idempotency to prevent duplicate withdrawals.
   - Add rate limiting for withdrawals.
 
 - **Environments**
+
   - Separate configuration for development, staging, and production.
 
-- **Testing & CI/CD*
+- \*_Testing & CI/CD_
+
   - Unit tests for controller and service layers.
   - GitHub Actions workflow for build & test.
 
 - **Deployment**
+
   - Dockerfile for containerization.
   - Kubernetes manifests for deployment.
 
 - **Monitoring**
+
   - Currently only basic logging; can be improved with Prometheus & Grafana.
- 
+
 - **Error Handling**
+
   - Could be enhanced with better structured error responses.
 
 - **Feature Enhancements**
@@ -267,11 +291,10 @@ The following Entity-Relationship Diagram (ERD) illustrates the database structu
 ## 📦 Note
 
 When the application runs migrations, it automatically:
+
 1. Creates required tables.
 2. Inserts seed data into the user table.
-   
+
 This means you can call the withdraw API immediately with a seeded user_id.
 
 ---
-
-
