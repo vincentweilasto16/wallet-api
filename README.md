@@ -7,13 +7,13 @@ The project includes **database migrations with seed data**, making it easy to s
 
 ## 📋 Table of Contents
 
-1. [Assumptions](#assumptions)
-2. [User Story (Process Flow)](#user-story)
-3. [Tech Stack](#tech-stack)
-4. [Prerequisites](#prerequisites)
-5. [Database Architecture](#database-architecture)
-6. [Setup & Run](#setup--run)
-7. [API Contract](#api-contract)
+1. [Assumptions](#assumptions)  
+2. [User Story (Process Flow)](#user-story-process-flow)  
+3. [Tech Stack](#tech-stack)  
+4. [Prerequisites](#prerequisites)  
+5. [Database Architecture](#database-architecture)  
+6. [Setup & Run](#setup--run)  
+7. [API Contract](#api-contract)  
 8. [Limitations & Future Improvements](#limitations--future-improvements)
 
 ---
@@ -55,7 +55,7 @@ The project includes **database migrations with seed data**, making it easy to s
    - If the withdrawal fails due to insufficient balance,
    - The API responds with an error, and the frontend shows a relevant error message without changing the balance display.
 
-![Wallet API Flowchart Diagram](docs/flowchart/Digital Wallet Withdrawal Flowchart.png)
+![Wallet API Flowchart Diagram](docs/flowchart/Digital%20Wallet%20Withdrawal%20Flowchart.png)
 
 ---
 
