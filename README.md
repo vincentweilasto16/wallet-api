@@ -7,7 +7,7 @@ The project includes **database migrations with seed data**, making it easy to s
 
 ## 📋 Table of Contents
 1. [Assumptions](#assumptions)
-2. [Process Flow](#process-flow)
+2. [User Story (Process Flow)](#user-story)
 3. [Tech Stack](#tech-stack)
 4. [Prerequisites](#prerequisites)
 5. [Database Architecture](#database-architecture)
@@ -26,32 +26,29 @@ The project includes **database migrations with seed data**, making it easy to s
 
 ---
 
-## 📌 Process Flow
+## 🧑‍💻 User Story (Process Flow)
 
-1. **Clone the Repository**
-   - Download the project from GitHub to your local machine.
+1. 📄 **View Wallet Balance**  
+   - The user opens their **Wallet page** in the application.  
+   - The frontend calls the API: `GET /api/v1/users/:id` to retrieve the latest balance.  
+   - The user sees their current balance on screen.  
 
-2. **Install Dependencies**
-   - Vendor dependencies with `go mod vendor` and clean up with `go mod tidy`.
+2. 🔄 **Refresh Balance**  
+   - If the user refreshes the page,  
+   - The same API is called again to ensure the balance shown is always up-to-date.  
 
-3. **Setup Environment**
-   - Copy `.env.example` to `.env` and adjust variables according to your setup (local PostgreSQL or Docker PostgreSQL).
+3. 💵 **Initiate Withdrawal**  
+   - The user clicks the **Withdraw** button and enters the desired amount.  
+   - The frontend sends a request to:  
+     `POST /api/v1/transactions/withdraw` with the `user_id` and `amount`.  
 
-4. **Prepare Database**
-   - Create the database in PostgreSQL (`wallet_db` by default).
-   - The app uses **golang-migrate** for migrations and **sqlc** to generate SQL queries.
-   - Migrations run automatically when the app starts.
-   - **Seed data** for `user` table is included, so you can directly perform withdrawals.
+4. ✅ **Successful Withdrawal**  
+   - The page is redirected or refreshed, triggering `GET /api/v1/users/:id` again.  
+   - The updated balance is displayed, showing the deduction from the withdrawal.  
 
-5. **Run the Application**
-   - Start the app with:
-     ```bash
-     go run cmd/main.go
-     ```
-
-6. **Test APIs**
-   - Use **Postman** or any API client to test endpoints.
-   - Example: `POST /withdraw` with an existing seeded user ID.
+5. ⚠️ **Insufficient Balance**  
+   - If the withdrawal fails due to insufficient balance,  
+   - The API responds with an error, and the frontend shows a relevant error message without changing the balance display.
 
 ---
 
